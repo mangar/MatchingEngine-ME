@@ -3,6 +3,8 @@ package org.matchingengine.ingress;
 import org.matchingengine.core.OrderBook;
 import quickfix.*;
 
+import java.io.InputStream;
+
 
 /**
  * Servidor FIX (Acceptor) que inicializa o Gateway de Entrada.
@@ -13,7 +15,14 @@ public class FixServer {
     public void start(OrderBook orderBook) throws Exception {
         // Configurações da sessão (porta, host, data dictionaries)
         // Normalmente carregado de um arquivo .cfg
-        SessionSettings settings = new SessionSettings("fix-server.cfg");
+        // Busca o arquivo na raiz do classpath (pasta resources)
+        InputStream configStream = getClass().getClassLoader().getResourceAsStream("fix-server.cfg");
+        if (configStream == null) {
+            throw new RuntimeException("ERRO: O arquivo fix-server.cfg não foi encontrado em src/main/resources!");
+        }
+        SessionSettings settings = new SessionSettings(configStream);
+
+//        SessionSettings settings = new SessionSettings("fix-server.cfg");
 
         FixIngressAdapter adapter = new FixIngressAdapter(orderBook);
         MessageStoreFactory storeFactory = new FileStoreFactory(settings);
@@ -29,6 +38,8 @@ public class FixServer {
     }
 
     public void stop() {
+
         if (acceptor != null) acceptor.stop();
+        System.out.println("FIX Ingress Gateway parado");
     }
 }

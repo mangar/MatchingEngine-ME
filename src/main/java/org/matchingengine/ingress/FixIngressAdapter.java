@@ -52,6 +52,11 @@ public class FixIngressAdapter  extends MessageCracker implements Application {
         @Override public void fromAdmin(Message msg, SessionID id) {}
         @Override public void toApp(Message msg, SessionID id) {}
         @Override public void fromApp(Message msg, SessionID id) throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, UnsupportedMessageType {
+
+            // Ver a mensagem bruta (Tag=Value) chegando:
+            System.out.println(">>> Mensagem FIX recebida no Adapter: " + msg.toString());
+
+
             crack(msg, id); // Direciona para o método onMessage correto
         }
     }

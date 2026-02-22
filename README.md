@@ -1,10 +1,12 @@
 # Matching Engine (ME)
 
-# Primeira Execução
+# Executando
 
-__Book e Trade__
+## Primeira Execução - Core  ```org.matchingengine.core.Main```
 
-```
+__Book e Trade__: 
+
+``` 
 --- Inserindo ordens de VENDA INICIAIS ---
 
 ==============================================
@@ -93,8 +95,31 @@ TRADE: 2 unidades a 500000 (Taker: Venda_F, Maker: Compra_E)
 
 ```
 
+## Ingress
+
+1. Inicie o Servidor: ``org.matchingengine.ingress.MainFixServer``
+2. Rode o cliente: ``org.matchengine.ingress.MainFixClientSimulator``
+
+Após executar o cliente, o output deve ser algo parecido com isto:
+
+    Logon: FIX.4.4:SNA52_EXCHANGE->XP_INVEST
+    >>> Mensagem FIX recebida no Adapter: 8=FIX.4.49=14135=D34=249=XP_INVEST52=20260222-17:12:20.94256=SNA52_EXCHANGE11=CLIENT_ORD_00138=10040=244=5054=155=PETR460=20260222-17:12:20.94110=071
+    [FIX INGRESS] Ordem recebida via FIX: CLIENT_ORD_001 de SNA52_EXCHANGE
+    
+    =================================================================================
+    LIVRO DE OFERTAS DETALHADO (MARKET BY ORDER) - SNA-52            
+    =================================================================================
+    COMPRA (LOTES/CORR)     |    PREÇO    |     VENDA (LOTES/CORR)    | ID ORDEM
+    ----------------------------|-------------|---------------------------|----------
+    ----------------------------|  S P R E A D |---------------------------|----------
+    100 (SNA52_EXCHANGE) |      500000 |                           | CLIENT_ORD_001
+    =================================================================================
+    
+    Logout: FIX.4.4:SNA52_EXCHANGE->XP_INVEST
 
 
+
+---
 
 # 1. Informações Úteis
 O tema é específico, então as melhores fontes são documentos técnicos de bolsas reais e implementações de código aberto de alta performance:
@@ -121,8 +146,10 @@ A distribuição deve focar na separação de responsabilidades para que o "núc
 
 ## 🔨 Módulo A: Gateway (Ingress)
 O que faz: Recebe as ordens (via REST, WebSocket ou FIX), valida a sintaxe e a autenticação.
-
 Motivador: Isolar a rede. O núcleo não pode esperar um pacote TCP chegar. O Gateway limpa a "sujeira" e entrega uma mensagem pronta.
+
+- QuickFix/J
+
 
 ## Módulo B: Sequencer (Opcional, mas recomendado)
 O que faz: Atribui um número de sequência único e global para cada mensagem recebida.
