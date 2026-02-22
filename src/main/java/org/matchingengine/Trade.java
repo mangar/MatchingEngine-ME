@@ -1,5 +1,7 @@
 package org.matchingengine;
 
+import org.matchingengine.core.Side;
+
 import java.time.Instant;
 
 /**

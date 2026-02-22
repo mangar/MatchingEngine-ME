@@ -1,4 +1,6 @@
-package org.matchingengine;
+package org.matchingengine.core;
+
+import org.matchingengine.Trade;
 
 import java.util.*;
 

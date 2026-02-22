@@ -119,7 +119,7 @@ O tema é específico, então as melhores fontes são documentos técnicos de bo
 # 3. Divisão em Módulos e Motivação
 A distribuição deve focar na separação de responsabilidades para que o "núcleo" (Matching) nunca seja interrompido por I/O (entrada/saída).
 
-## Módulo A: Gateway (Ingress)
+## 🔨 Módulo A: Gateway (Ingress)
 O que faz: Recebe as ordens (via REST, WebSocket ou FIX), valida a sintaxe e a autenticação.
 
 Motivador: Isolar a rede. O núcleo não pode esperar um pacote TCP chegar. O Gateway limpa a "sujeira" e entrega uma mensagem pronta.
@@ -129,7 +129,7 @@ O que faz: Atribui um número de sequência único e global para cada mensagem r
 
 Motivador: Garante a ordem de chegada (First-Come, First-Served). Se você tiver vários Gateways, o Sequencer dita a ordem justa.
 
-## Módulo C: Matching Engine (O Core)
+## ✅ Módulo C: Matching Engine (O Core)
 O que faz: Mantém o Order Book em memória e executa o algoritmo de cruzamento (Price-Time Priority).
 
 Motivador: Performance Pura. Este módulo deve rodar isolado, idealmente com afinidade de CPU (CPU pinning), sem fazer acesso a disco ou banco de dados diretamente.

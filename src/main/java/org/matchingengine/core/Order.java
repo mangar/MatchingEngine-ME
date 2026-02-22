@@ -1,7 +1,7 @@
-package org.matchingengine;
+package org.matchingengine.core;
 
 // Classes de Suporte atualizadas para tipos primitivos long
-enum Side { BUY, SELL }
+
 
 public class Order {
     String id;
