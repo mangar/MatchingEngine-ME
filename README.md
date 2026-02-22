@@ -139,6 +139,9 @@ O tema é específico, então as melhores fontes são documentos técnicos de bo
 - CPU Cache Friendly: Tente manter os dados próximos na memória (L1/L2 cache). O uso de Long2ObjectHashMap (de bibliotecas como fastutil ou koloboke) é melhor que o HashMap padrão do Java.
 
 
+---
+
+
 
 
 # 3. Divisão em Módulos e Motivação
@@ -146,7 +149,7 @@ A distribuição deve focar na separação de responsabilidades para que o "núc
 
 ## 🔨 Módulo A: Gateway (Ingress)
 O que faz: Recebe as ordens (via REST, WebSocket ou FIX), valida a sintaxe e a autenticação.
-Motivador: Isolar a rede. O núcleo não pode esperar um pacote TCP chegar. O Gateway limpa a "sujeira" e entrega uma mensagem pronta.
+__Motivador__: Isolar a rede. O núcleo não pode esperar um pacote TCP chegar. O Gateway limpa a "sujeira" e entrega uma mensagem pronta.
 
 - QuickFix/J
 
@@ -158,8 +161,7 @@ Motivador: Garante a ordem de chegada (First-Come, First-Served). Se você tiver
 
 ## ✅ Módulo C: Matching Engine (O Core)
 O que faz: Mantém o Order Book em memória e executa o algoritmo de cruzamento (Price-Time Priority).
-
-Motivador: Performance Pura. Este módulo deve rodar isolado, idealmente com afinidade de CPU (CPU pinning), sem fazer acesso a disco ou banco de dados diretamente.
+__Motivador__: Performance Pura. Este módulo deve rodar isolado, idealmente com afinidade de CPU (CPU pinning), sem fazer acesso a disco ou banco de dados diretamente.
 
 ## Módulo D: Ledger / Journaler (Persistência)
 O que faz: Grava cada evento (ordem aceita, execução, cancelamento) em um log sequencial (Append-only).
@@ -173,3 +175,18 @@ Motivador: Desacoplamento. O Matching Engine "cospe" o resultado e segue para a 
 
 LMAX Disruptor para comunicar o Gateway com o Matching Engine. É a forma mais performática de passar dados entre threads em Java.
 
+
+
+
+
+
+---
+
+## TODO
+
+- Ingress
+- Core
+  - LMAX com Ingress
+  - WebSocket com Cotação/DOM e Trades
+- Egress
+- Ledger
