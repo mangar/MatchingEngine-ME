@@ -6,18 +6,24 @@ import java.time.Instant;
  *
  */
 public class Trade {
-    final String tradeId;
-    final String takerOrderId;
-    final String makerOrderId;
-    final long quantity;
-    final long price;
-    final Instant timestamp;
-    final Side side; // Lado do AGRESSOR (Taker)
+    private final String tradeId;
+    private final String takerOrderId;
+    private final String makerOrderId;
+    private final String takerBroker;
+    private final String makerBroker;
+    private final long quantity;
+    private final long price;
+    private final Side side; // Lado do agressor
+    private final Instant timestamp;
 
-    public Trade(String tradeId, String takerOrderId, String makerOrderId, long quantity, long price, Side side) {
+    public Trade(String tradeId, String takerOrderId, String makerOrderId,
+                 String takerBroker, String makerBroker,
+                 long quantity, long price, Side side) {
         this.tradeId = tradeId;
         this.takerOrderId = takerOrderId;
         this.makerOrderId = makerOrderId;
+        this.takerBroker = takerBroker;
+        this.makerBroker = makerBroker;
         this.quantity = quantity;
         this.price = price;
         this.side = side;
@@ -26,10 +32,10 @@ public class Trade {
 
     @Override
     public String toString() {
-        return String.format("[%s] TRADE ID: %s | Preço: %d | Qtd: %d | Taker: %s | Maker: %s",
-                timestamp, tradeId, price, quantity, takerOrderId, makerOrderId);
+        return String.format("[%s] TRADE %s | %d @ %d | Taker: %s (%s) | Maker: %s (%s) | Side: %s",
+                timestamp, tradeId, quantity, price,
+                takerOrderId, takerBroker, makerOrderId, makerBroker, side);
     }
-
 
     public String getTradeId() {
         return tradeId;
@@ -43,6 +49,14 @@ public class Trade {
         return makerOrderId;
     }
 
+    public String getTakerBroker() {
+        return takerBroker;
+    }
+
+    public String getMakerBroker() {
+        return makerBroker;
+    }
+
     public long getQuantity() {
         return quantity;
     }
@@ -51,11 +65,11 @@ public class Trade {
         return price;
     }
 
-    public Instant getTimestamp() {
-        return timestamp;
-    }
-
     public Side getSide() {
         return side;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
     }
 }
